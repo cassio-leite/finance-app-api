@@ -1,14 +1,14 @@
-import { v4 as uuidv4 } from 'uuid'
+import crypto from 'crypto'
 import bcrypt from 'bcrypt'
 
-import { PostgresCreateUserRepository } from '../repositories/postgres/create-user'
+import { PostgresCreateUserRepository } from '../repositories/postgres/create-user.js'
 
 export class CreateUserUseCase {
     async execute(createUserParams) {
         // TODO: verificar se o email já existe
 
         // Gerar um ID único para o usuário
-        const userId = uuidv4()
+        const userId = crypto.randomUUID()
 
         // criptografar a senha do usuário
         const hashedPassword = await bcrypt.hash(createUserParams.password, 10)
