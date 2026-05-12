@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "npx husky install",
-    "migrations": "node src/db/postgres/migrations/exec.js"
+    "migrations": "node src/db/postgres/migrations/exec.js",
+    "start:dev": "node --watch index.js"
   },
   "keywords": [],
   "author": "",
@@ -19,7 +20,8 @@
     "husky": "^8.0.3",
     "lint-staged": "^15.5.2",
     "pg": "^8.20.0",
-    "uuid": "^14.0.0"
+    "uuid": "^14.0.0",
+    "validator": "^13.15.35"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
