@@ -2,10 +2,21 @@ import crypto from 'crypto'
 import bcrypt from 'bcrypt'
 
 import { PostgresCreateUserRepository } from '../repositories/postgres/create-user.js'
+import { PostgresGetUserByEmailRepository } from '../repositories/postgres/get-user-by-email.js'
 
 export class CreateUserUseCase {
     async execute(createUserParams) {
         // TODO: verificar se o email já existe
+        const postgresGetUserByEmailRepository =
+            new PostgresGetUserByEmailRepository()
+        const userWithProvideEmail =
+            await postgresGetUserByEmailRepository.execute(
+                createUserParams.emai,
+            )
+
+        if (userWithProvideEmail) {
+            throw new Error('The provided email is already in use')
+        }
 
         // Gerar um ID único para o usuário
         const userId = crypto.randomUUID()
