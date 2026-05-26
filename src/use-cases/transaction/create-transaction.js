@@ -6,7 +6,6 @@ export class CreateTransactionUseCase {
         this.createTransactionRepository = createTransactionRepository
         this.getUserByIdRepository = getUserByIdRepository
     }
-
     async execute(createTransactionParams) {
         const userId = createTransactionParams.userId
         const user = await this.getUserByIdRepository.execute(userId)
