@@ -1,6 +1,10 @@
-import { checkIfIdIsValid, invalidIdResponse, ok } from '../helpers.js'
-import { serverError } from '../helpers.js'
-
+import {
+    checkIfIdIsValid,
+    invalidIdResponse,
+    ok,
+    serverError,
+    transactionNotFoundResponse,
+} from '../helpers/index.js'
 export class DeleteTransactionController {
     constructor(deleteTransactionUseCase) {
         this.deleteTransactionUseCase = deleteTransactionUseCase
@@ -13,11 +17,16 @@ export class DeleteTransactionController {
                 return invalidIdResponse()
             }
 
-            const transaction = await this.deleteTransactionUseCase.execute(
-                httpRequest.params.transactionId,
-            )
+            const deleteTransaction =
+                await this.deleteTransactionUseCase.execute(
+                    httpRequest.params.transactionId,
+                )
 
-            return ok(transaction)
+            if (!deleteTransaction) {
+                return transactionNotFoundResponse()
+            }
+
+            return ok(deleteTransaction)
         } catch (error) {
             console.error(error)
 
